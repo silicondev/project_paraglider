@@ -9,6 +9,16 @@ namespace project_paraglider.System
 {
     public abstract class VisualObject : MonoBehaviour
     {
+        public Mesh Mesh
+        {
+            get => _filter?.sharedMesh;
+            set
+            {
+                if (_filter != null)
+                    _filter.sharedMesh = value;
+            }
+        }
+
         protected MeshFilter _filter;
 
         protected abstract void OnStart();
@@ -26,16 +36,21 @@ namespace project_paraglider.System
                 meshObj.transform.parent = base.transform;
                 meshObj.AddComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Standard"));
                 _filter = meshObj.AddComponent<MeshFilter>();
-                _filter.sharedMesh = new Mesh();
+                Mesh = new Mesh();
             }
 
-            GenerateMesh(_filter.sharedMesh);
+            GenerateMesh(Mesh);
         }
 
         // Update is called once per frame
         void Update()
         {
             OnUpdate();
+        }
+
+        public void AddChild(VisualObject obj)
+        {
+            obj.transform.parent = base.transform;
         }
     }
 }
