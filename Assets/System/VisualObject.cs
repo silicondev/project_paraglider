@@ -18,6 +18,8 @@ namespace project_paraglider.System
         // Start is called before the first frame update
         void Start()
         {
+            OnStart();
+
             if (_filter == null)
             {
                 var meshObj = new GameObject("mesh");
@@ -28,7 +30,6 @@ namespace project_paraglider.System
             }
 
             GenerateMesh(_filter.sharedMesh);
-            OnStart();
         }
 
         // Update is called once per frame
